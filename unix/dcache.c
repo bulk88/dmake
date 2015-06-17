@@ -39,7 +39,7 @@
 #ifdef __APPLE__
 #include <sys/types.h>
 #endif
-#include <dirent.h>
+#include "dirent.h"
 #include <sysintf.h>
 
 

@@ -46,7 +46,7 @@ _os=`uname`
 
 if test `echo $_os | $AWK -F_ '{ print $1 }'` = "CYGWIN"; then
    if test "$GCC" = "yes"; then
-      if test `$CC -dumpmachine | $AWK -F- '{ print $3 }'` = "mingw32"; then
+      if gcc -dumpmachine | grep -i "mingw"; then
          _os="MINGW"
       else
          _os="CYGWIN"
