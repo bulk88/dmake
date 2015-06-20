@@ -24,6 +24,20 @@
 */
 
 #define DMSTAT stat
+
+#define HAVE_DMPORTSTAT 1
+/* override default implementation */
+#undef DMPORTSTAT_T
+#undef DMPORTSTAT
+#undef DMPORTSTAT_SUCCESS
+#undef DMPORTSTAT_MTIME
+#undef DMPORTSTAT_ISDIR
+#define DMPORTSTAT_T WIN32_FILE_ATTRIBUTE_DATA
+#define DMPORTSTAT(path, buf) GetFileAttributesEx((path), GetFileExInfoStandard, (buf))
+#define DMPORTSTAT_SUCCESS(x) ((x) != 0)
+#define DMPORTSTAT_MTIME(x) (FileTimeTo_time_t(&((x)->ftLastWriteTime)))
+#define DMPORTSTAT_ISDIR(x) ((x)->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+
 #define VOID_LCACHE(l,m)
 #define GETPID _psp
 #define Hook_std_writes(A)
@@ -52,5 +66,3 @@ extern char * getcwd();
 #undef _POSIX_PATH_MAX
 #endif
 #define _POSIX_PATH_MAX _MAX_PATH
-
-#define fputc(_c,_stream) _fputc_nolock(_c,_stream)

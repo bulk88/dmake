@@ -31,6 +31,7 @@ AC_ARG_ENABLE(spawn,
 dnl Checks for programs.
 AC_PROG_CPP
 AC_PROG_CXX
+AM_PROG_AS
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -86,7 +87,7 @@ case "$_os" in
 	"MSVC6")
 	  OS_VERSION=msvc6
 	  OS_TYPE=winnt
-	  BUILDINFO="Windows / MS Visual C++\" dmstr2(_MSC_FULL_VER) \""
+	  BUILDINFO="Windows / MS Visual C++ \" dmstr2(_MSC_FULL_VER) \" autoconf"
 	  CASE_INSENSITIVE_FS=true
 	  ;;
 	"Darwin")
@@ -128,6 +129,7 @@ AC_MSG_RESULT([checked ($_os)])
 dnl Set OS dependent settings
 AM_CONDITIONAL(OSTYPEUNIX, test x$OS_TYPE = xunix)
 AM_CONDITIONAL(OSTYPEWIN32, test x$OS_TYPE = xwinnt)
+AM_CONDITIONAL(MINGW, test x$OS_VERSION = xmingw)
 AM_CONDITIONAL(MSVC, test x$OS_VERSION =  xmsvc6)
 
 AC_SUBST(OS_TYPE)
@@ -194,7 +196,7 @@ dnl Initialize libtool
 dnl Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h limits.h strings.h sys/types.h sys/stat.h unistd.h errno.h utime.h sys/utime.h spawn.h wait.h sys/wait.h sys/time.h cygwin/process.h)
+AC_CHECK_HEADERS(fcntl.h limits.h strings.h sys/types.h sys/stat.h unistd.h errno.h utime.h sys/utime.h spawn.h wait.h sys/wait.h sys/time.h cygwin/process.h new.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

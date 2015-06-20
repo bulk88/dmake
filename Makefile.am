@@ -58,6 +58,10 @@ dmake_SOURCES += win95/dchdir.c win95/switchar.c \
                  win95/microsft/ruletab.c \
                  win95/microsft/allochnd.cpp
 
+if MINGW
+dmake_SOURCES += winnt/mingw/newmodet.s winnt/mingw/newmodes00000.s
+endif
+
 if MSVC
 dmake_LDFLAGS = newmode.obj
 endif

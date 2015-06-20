@@ -79,14 +79,10 @@
 #endif
 
 /* Build info string */
-#define BUILDINFO "Windows / MS Visual C++ " dmstr2(_MSC_FULL_VER)
+#define BUILDINFO "Windows / MS Visual C++ " dmstr2(_MSC_FULL_VER) ""
 
 /* Assume case insensitive file system. */
 #define CASE_INSENSITIVE_FS 1
-
-
-/* These functions are available! (this is tested only with MSVC++ 6.0) */
-#define HAVE_UTIME_NULL 1
 
 /* Define to 1 if you have the <errno.h> header file. */
 #define HAVE_ERRNO_H 1
@@ -102,6 +98,9 @@
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
+
+/* Define to 1 if you have the <new.h> header file. */
+#define HAVE_NEW_H 1
 
 /* Define to 1 if you have the `setvbuf' function. */
 #define HAVE_SETVBUF 1
@@ -125,11 +124,17 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
 
+/* Define to 1 if you have the <sys/utime.h> header file. */
+#define HAVE_SYS_UTIME_H 1
+
 /* Define to 1 if you have the `tempnam' function. */
 #define HAVE_TEMPNAM 1
 
 /* Define to 1 if you have the `tzset' function. */
 #define HAVE_TZSET 1
+
+/* Define to 1 if `utime(file, NULL)' sets file's timestamp to the present. */
+#define HAVE_UTIME_NULL 1
 
 /* Define to 1 if you have the `vprintf' function. */
 #define HAVE_VPRINTF 1
