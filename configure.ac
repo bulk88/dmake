@@ -30,6 +30,7 @@ AC_ARG_ENABLE(spawn,
 ],,)
 dnl Checks for programs.
 AC_PROG_CPP
+AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -85,7 +86,7 @@ case "$_os" in
 	"MSVC6")
 	  OS_VERSION=msvc6
 	  OS_TYPE=winnt
-	  BUILDINFO="Windows / MS Visual C++" dmstr2\(_MSC_FULL_VER\)
+	  BUILDINFO="Windows / MS Visual C++\" dmstr2(_MSC_FULL_VER) \""
 	  CASE_INSENSITIVE_FS=true
 	  ;;
 	"Darwin")
@@ -127,6 +128,7 @@ AC_MSG_RESULT([checked ($_os)])
 dnl Set OS dependent settings
 AM_CONDITIONAL(OSTYPEUNIX, test x$OS_TYPE = xunix)
 AM_CONDITIONAL(OSTYPEWIN32, test x$OS_TYPE = xwinnt)
+AM_CONDITIONAL(MSVC, test x$OS_VERSION =  xmsvc6)
 
 AC_SUBST(OS_TYPE)
 AC_SUBST(OS_VERSION)
@@ -192,7 +194,7 @@ dnl Initialize libtool
 dnl Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h limits.h strings.h sys/types.h sys/stat.h unistd.h errno.h utime.h spawn.h wait.h sys/wait.h sys/time.h cygwin/process.h)
+AC_CHECK_HEADERS(fcntl.h limits.h strings.h sys/types.h sys/stat.h unistd.h errno.h utime.h sys/utime.h spawn.h wait.h sys/wait.h sys/time.h cygwin/process.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -217,6 +219,40 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(getcwd getwd strerror setvbuf tzset settz mkstemp tempnam gettimeofday setenv)
 # Useful, but special to newlib/MSVC
 AC_CHECK_FUNCS(strlwr)
+
+
+AC_CACHE_CHECK(whether MSVC utime accepts a null argument, ac_cv_func_msvc_utime_null,
+[rm -f conftest.data; >conftest.data
+# Sequent interprets utime(file, 0) to mean use start of epoch.  Wrong.
+AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT
+	       #ifdef HAVE_SYS_UTIME_H
+	       # include <sys/utime.h>
+	       #endif
+	       #ifdef HAVE_UTIME_H
+	       # include <utime.h>
+	       #endif],
+[[struct stat s, t;
+  return ! (stat ("conftest.data", &s) == 0
+	    && utime ("conftest.data", 0) == 0
+	    && stat ("conftest.data", &t) == 0
+	    && t.st_mtime >= s.st_mtime
+	    && t.st_mtime - s.st_mtime < 120);]])],
+	      ac_cv_func_utime_null=yes,
+	      ac_cv_func_utime_null=no,
+	      ac_cv_func_utime_null='guessing yes')])
+if test "x$ac_cv_func_msvc_utime_null" != xno; then
+  ac_cv_func_msvc_utime_null=yes
+  AC_DEFINE(HAVE_UTIME_NULL, 1,
+	    [Define to 1 if `utime(file, NULL)' sets file's timestamp to the
+	     present.])
+fi
+rm -f conftest.data
+
+#compile script required for all cl.exe from autoconf usage
+#IDK why autoconf doesn't add compile script to CXX but it does to CPP
+if test "$OS_VERSION" == "msvc6"; then
+	CXX="$am_aux_dir/compile $CXX"
+fi
 
 dnl *** output to disk ***
 AC_OUTPUT

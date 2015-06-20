@@ -95,6 +95,10 @@ SO C++ conformant name: _unlink. See online help for details.' */
 #if HAVE_UTIME_H
 # include <utime.h>
 #endif
+/* for MSVC */
+#if HAVE_SYS_UTIME_H
+# include <sys/utime.h>
+#endif
 
 #define DMPVOID void *
 
