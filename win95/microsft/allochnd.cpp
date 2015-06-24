@@ -7,6 +7,9 @@
    in msvcrt.dll from plain [GC] C */
 #ifdef HAVE_NEW_H
 #  include <new.h>
+#  ifndef _MSC_VER /* using DLL CRT on mingw so must use the func, not newmode.obj */
+#    define USE_SET_NEW_MODE
+#  endif
 #else
 #  include <stddef.h>
 #  include <_mingw.h>

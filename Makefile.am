@@ -59,7 +59,7 @@ dmake_SOURCES += win95/dchdir.c win95/switchar.c \
                  win95/microsft/allochnd.cpp
 
 if MINGW
-dmake_SOURCES += winnt/mingw/newmodet.s winnt/mingw/newmodes00000.s
+dmake_SOURCES += winnt/mingw/newmodet.S winnt/mingw/newmodes00000.S
 endif
 
 if MSVC

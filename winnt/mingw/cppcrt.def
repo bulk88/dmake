@@ -3,3 +3,4 @@ EXPORTS
 ;_set_new_handler64 = ?_set_new_handler@@YAP6AH_K@ZP6AH0@Z@Z
 ;_set_new_handler32 = ?_set_new_handler@@YAP6AHI@ZP6AHI@Z@Z
 _set_new_handler = ?_set_new_handler@@YAP6AHI@ZP6AHI@Z@Z
+_set_new_mode = ?_set_new_mode@@YAHH@Z
