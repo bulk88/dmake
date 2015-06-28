@@ -29,7 +29,9 @@ __imp__set_new_handler:
 __imp__Z16_set_new_handlerPFiyE:
 #else
 .globl __imp___set_new_handler
+.globl __imp___Z16_set_new_handlerPFijE
 __imp___set_new_handler:
+__imp___Z16_set_new_handlerPFijE:
 #endif
 	.rva	.string_set_new_handler
 /* pad to 64 bits because a 64 bit func ptr will be written over the RVA */
@@ -60,13 +62,17 @@ __set_new_mode:
 
 
 .section .idata$5
-.globl __imp___set_new_mode
-__imp___set_new_mode:
-/* WIN64 version */
+#ifdef _WIN64
 .globl __imp__set_new_mode
 .globl __imp__Z13_set_new_modei
 __imp__set_new_mode:
 __imp__Z13_set_new_modei:
+#else
+.globl __imp___set_new_mode
+.globl __imp___Z13_set_new_modei
+__imp___set_new_mode:
+__imp___Z13_set_new_modei:
+#endif
 	.rva	.string_set_new_mode
 #ifdef _WIN64
 	.long 0
