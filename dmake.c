@@ -144,17 +144,17 @@ char **argv;
    int     m_export;
 
 #ifdef _WIN32
-
+   //DebugBreak();
    dm_set_new_handler(dm_malloc_handler);
    /* test if handler works */
-   /*
+
    {
       void * overflow;
       overflow = malloc( ((size_t)-1)>>1 );
       if(!handler_fired)
          *(int*)overflow = 1;
    }
-   */
+   
 #endif
 
    /* Uncomment the following line to pass commands to the DBUG engine
@@ -880,11 +880,11 @@ DARG(va_alist_type,va_alist)
 static int
 dm_malloc_handler(size_t size)
 {
-/*
+
    if(handler_fired  == 0 )
       handler_fired = 1;
    else
-*/
+
    Fatal( "No more memory" );
    return 0;
 }
